@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 4000;
 
 const mongoUrl = `mongodb+srv://${process.env.MONGO_USER}:${
   process.env.MONGO_PASS
-}@cluster0-byhyw.mongodb.net/test?retryWrites=true&w=majority`;
+}@cluster0-${process.env.CLUSTER_CODE}.mongodb.net/test?retryWrites=true&w=majority`;
 
 mongoose.connect(mongoUrl, { useNewUrlParser: true });
 
