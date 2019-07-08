@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const JournalEntry = new Schema({
     particulars :  String,
     project: String,
-    currentBalance : Number,
+    // Not needed
+    // currentBalance : Number,
     contractor: String,
     paymentMethod: String,
     creditedAmount: Number,
