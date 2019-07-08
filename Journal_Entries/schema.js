@@ -7,6 +7,7 @@ const JournalEntry = new Schema({
     project: String,
     // Not needed
     // currentBalance : Number,
+    // Testing wajeeh
     contractor: String,
     paymentMethod: String,
     creditedAmount: Number,
