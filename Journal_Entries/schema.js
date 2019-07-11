@@ -7,14 +7,14 @@ const JournalEntry = new Schema({
     project: String,
     // Not needed
     // currentBalance : Number,
-    // Testing wajeeh
-    contractor: String,
-    paymentMethod: String,
+    receivingAccount: String,
+    sendingAccount: String,
     creditedAmount: Number,
     debitedAmount: Number,
     typeOfEntry: String,
-    date: Date, 
-    status: String,
+    date: Date,
+    // Not needed
+    // status: String,
 })
 
 module.exports = mongoose.model('JournalEntry', JournalEntry);

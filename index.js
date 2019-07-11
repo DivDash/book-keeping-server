@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 4000;
 
 const mongoUrl = `mongodb+srv://${process.env.MONGO_USER}:${
   process.env.MONGO_PASS
-}@cluster0-byhyw.mongodb.net/test?retryWrites=true&w=majority`;
+}@cluster0-${process.env.CLUSTER_CODE}.mongodb.net/test?retryWrites=true&w=majority`;
 
 mongoose.connect(mongoUrl, { useNewUrlParser: true });
 
@@ -35,8 +35,8 @@ app.use(cors());
 app.use("/bank", bank);
 app.use("/cash", cash);
 app.use("/journal-entries", journalEntry);
-app.use("/add-entry", entryType);
-app.use("/add-project", project);
+app.use("/entries", entryType); // Semantic change
+app.use("/projects", project); // Semantic change
 
 app.listen(PORT, hostname, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
