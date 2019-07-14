@@ -10,6 +10,7 @@ const { journalEntry } = require("./Journal_Entries/routes");
 const { cash } = require("./Cash_Account/routes");
 const { entryType } = require("./Add_Entry_Type/routes");
 const { project } = require("./Add_Projects/routes");
+const { nonProfit } = require("./Add_NonProfit/routes");
 const app = express();
 require('dotenv').config()
 const PORT = process.env.PORT || 4000;
@@ -37,6 +38,7 @@ app.use("/cash", cash);
 app.use("/journal-entries", journalEntry);
 app.use("/entries", entryType); // Semantic change
 app.use("/projects", project); // Semantic change
+app.use("/non-profit", nonProfit); // New added
 
 app.listen(PORT, hostname, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
