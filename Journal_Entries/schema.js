@@ -3,16 +3,19 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const JournalEntry = new Schema({
-    particulars :  String,
-    project: String,
-    currentBalance : Number,
-    contractor: String,
-    paymentMethod: String,
-    creditedAmount: Number,
-    debitedAmount: Number,
+    particulars: String,
+    costCenterId: String,
+    // Not needed
+    // currentBalance : Number,
+    receivingAccountId: String,
+    sendingAccountId: String,
+    transferredAmount: Number,
+    // creditedAmount: Number,
+    // debitedAmount: Number,
     typeOfEntry: String,
-    date: Date, 
-    status: String,
+    date: Date,
+    // Not needed
+    // status: String,
 })
 
 module.exports = mongoose.model('JournalEntry', JournalEntry);
