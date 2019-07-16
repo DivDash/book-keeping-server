@@ -11,12 +11,9 @@ const { journalEntry } = require("./Journal_Entries/routes");
 const { cash } = require("./Cash_Account/routes");
 const { entryType } = require("./Add_Entry_Type/routes");
 const { project } = require("./Add_Projects/routes");
-<<<<<<< HEAD
 const { user } = require("./User/user");
-
-=======
 const { nonProfit } = require("./Add_NonProfit/routes");
->>>>>>> wajeeh
+
 const app = express();
 require('dotenv').config()
 const PORT = process.env.PORT || 4000;
