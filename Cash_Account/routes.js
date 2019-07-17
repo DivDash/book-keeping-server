@@ -1,13 +1,21 @@
 const express = require("express");
 const cashAccount = require("./schema");
 const  { commonEmitter } = require('../events')
-const socket_io = require('socket.io');
+// const socket_io = require('socket.io');
 // var io = socket_io();
 
 const changeStream = cashAccount.watch();
 
 changeStream.on('change', (data) => {
-  commonEmitter.emit("newData", data)
+  cashAccount.find((err, doc) => {
+    if (err) {
+      commonEmitter.emit("cashData", {
+        error: err.message
+      })
+    } else {
+      commonEmitter.emit("cashData", doc )
+    }
+  });
 }); 
 
 

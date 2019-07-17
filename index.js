@@ -27,6 +27,7 @@ const mongoUrl = "mongodb+srv://admin:admin123@cluster0-byhyw.mongodb.net/test?r
 
 
 
+
 mongoose.connect(mongoUrl, { useNewUrlParser: true });
 
 const connection = mongoose.connection;
@@ -88,8 +89,8 @@ const io = socket.listen(server, {
 
 
 io.on('connection', (socket)=>{
-  commonEmitter.on('newData', function (data) {
-    socket.broadcast.emit('newData', data)
+  commonEmitter.on('cashData', function (data) {
+    socket.broadcast.emit('cashData', data)
   });
   console.log('Listener connected');
 })
