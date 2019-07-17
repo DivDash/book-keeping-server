@@ -1,19 +1,14 @@
 const express = require("express");
 const cashAccount = require("./schema");
-
+const  { commonEmitter } = require('../events')
 const socket_io = require('socket.io');
-var io = socket_io();
+// var io = socket_io();
 
 const changeStream = cashAccount.watch();
 
-changeStream.on('change', (change) => {
-    console.log(change); // You could parse out the needed info and send only that data. 
-    io.emit('changeData', change);
+changeStream.on('change', (data) => {
+  commonEmitter.emit("newData", data)
 }); 
-
-io.on('connection', function () {
-    console.log('connected');
-});
 
 
 

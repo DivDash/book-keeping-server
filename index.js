@@ -14,14 +14,18 @@ const { project } = require("./Add_Projects/routes");
 const { user } = require("./User/user");
 const { nonProfit } = require("./Add_NonProfit/routes");
 const http = require("http");
+const { commonEmitter } = require('./events')
 
 const app = express();
 require('dotenv').config()
 const PORT = process.env.PORT || 4000;
 
-const mongoUrl = `mongodb+srv://${process.env.MONGO_USER}:${
-  process.env.MONGO_PASS
-}@cluster0-${process.env.CLUSTER_CODE}.mongodb.net/test?retryWrites=true&w=majority`;
+const mongoUrl = "mongodb+srv://admin:admin123@cluster0-byhyw.mongodb.net/test?retryWrites=true&w=majority"
+
+
+
+
+
 
 mongoose.connect(mongoUrl, { useNewUrlParser: true });
 
@@ -78,7 +82,15 @@ const io = socket.listen(server, {
   transports: ['websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling', 'polling']
 });
 
-io.on('connection', console.log)
 
-// module.exports.socket = socket;
-// module.exports.io = io;
+
+
+
+
+io.on('connection', (socket)=>{
+  commonEmitter.on('newData', function (data) {
+    socket.broadcast.emit('newData', data)
+  });
+  console.log('Listener connected');
+})
+
