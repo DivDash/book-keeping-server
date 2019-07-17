@@ -1,15 +1,20 @@
 const express = require("express");
 const NonProfit = require("./schema");
-const socket_io = require('socket.io');
-var io = socket_io();
+const  { commonEmitter } = require('../events')
 
 const changeStream = NonProfit.watch();
 
-changeStream.on('change', (change) => {
-    console.log(change); // You could parse out the needed info and send only that data. 
-    io.emit('changeData', change);
+changeStream.on('change', (data) => {
+  NonProfit.find((err, doc) => {
+    if (err) {
+      commonEmitter.emit("nonProfitData", {
+        error: err.message
+      })
+    } else {
+      commonEmitter.emit("nonProfitData", doc )
+    }
+  });
 }); 
-
 
 
 // Add NonProfit Router

@@ -20,11 +20,9 @@ const app = express();
 require('dotenv').config()
 const PORT = process.env.PORT || 4000;
 
-const mongoUrl = "mongodb+srv://admin:admin123@cluster0-byhyw.mongodb.net/test?retryWrites=true&w=majority"
-
-
-
-
+const mongoUrl = `mongodb+srv://${process.env.MONGO_USER}:${
+  process.env.MONGO_PASS
+}@cluster0-${process.env.CLUSTER_CODE}.mongodb.net/test?retryWrites=true&w=majority`;
 
 
 
@@ -82,15 +80,25 @@ const io = socket.listen(server, {
   origins: '*:*',
   transports: ['websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling', 'polling']
 });
-
-
-
-
-
-
+// EntryType
 io.on('connection', (socket)=>{
   commonEmitter.on('cashData', function (data) {
     socket.broadcast.emit('cashData', data)
+  });
+  commonEmitter.on('journalData', function (data) {
+    socket.broadcast.emit('journalData', data)
+  });
+  commonEmitter.on('bankData', function (data) {
+    socket.broadcast.emit('bankData', data)
+  });
+  commonEmitter.on('projectData', function (data) {
+    socket.broadcast.emit('projectData', data)
+  });
+  commonEmitter.on('nonProfitData', function (data) {
+    socket.broadcast.emit('nonProfitData', data)
+  });
+  commonEmitter.on('entryTypeData', function (data) {
+    socket.broadcast.emit('entryTypeData', data)
   });
   console.log('Listener connected');
 })

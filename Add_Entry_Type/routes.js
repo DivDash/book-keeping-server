@@ -1,5 +1,20 @@
 const express = require("express");
 const EntryType = require("./schema");
+const  { commonEmitter } = require('../events')
+
+const changeStream = EntryType.watch();
+
+changeStream.on('change', (data) => {
+  EntryType.find((err, doc) => {
+    if (err) {
+      commonEmitter.emit("entryTypeData", {
+        error: err.message
+      })
+    } else {
+      commonEmitter.emit("entryTypeData", doc )
+    }
+  });
+}); 
 
 // Entry Type Router
 const entryType = express.Router();

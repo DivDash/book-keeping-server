@@ -1,15 +1,21 @@
 const express = require("express");
 const JournalEntry = require("./schema");
-
-const socket_io = require('socket.io');
-var io = socket_io();
+const  { commonEmitter } = require('../events')
 
 const changeStream = JournalEntry.watch();
 
-changeStream.on('change', (change) => {
-    console.log(change); // You could parse out the needed info and send only that data. 
-    io.emit('changeData', change);
+changeStream.on('change', (data) => {
+  JournalEntry.find((err, doc) => {
+    if (err) {
+      commonEmitter.emit("journalData", {
+        error: err.message
+      })
+    } else {
+      commonEmitter.emit("journalData", doc )
+    }
+  });
 }); 
+
 
 // journalEntry Router
 const journalEntry = express.Router();

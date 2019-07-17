@@ -1,8 +1,6 @@
 const express = require("express");
 const cashAccount = require("./schema");
 const  { commonEmitter } = require('../events')
-// const socket_io = require('socket.io');
-// var io = socket_io();
 
 const changeStream = cashAccount.watch();
 
