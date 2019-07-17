@@ -11,11 +11,6 @@ changeStream.on('change', (change) => {
     io.emit('changeData', change);
 }); 
 
-io.on('connection', function () {
-    console.log('connected');
-});
-
-
 // journalEntry Router
 const journalEntry = express.Router();
 

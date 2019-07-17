@@ -10,10 +10,6 @@ changeStream.on('change', (change) => {
     io.emit('changeData', change);
 }); 
 
-io.on('connection', function () {
-    console.log('connected');
-});
-
 // Entry Type Router
 const entryType = express.Router();
 
