@@ -83,22 +83,22 @@ const io = socket.listen(server, {
 // EntryType
 io.on('connection', (socket)=>{
   commonEmitter.on('cashData', function (data) {
-    socket.broadcast.emit('cashData', data)
+    socket.broadcast.emit('cash-data', data)
   });
   commonEmitter.on('journalData', function (data) {
-    socket.broadcast.emit('journalData', data)
+    socket.broadcast.emit('journal-entries-data', data)
   });
   commonEmitter.on('bankData', function (data) {
-    socket.broadcast.emit('bankData', data)
+    socket.broadcast.emit('bank-data', data)
   });
   commonEmitter.on('projectData', function (data) {
-    socket.broadcast.emit('projectData', data)
+    socket.broadcast.emit('project-data', data)
   });
   commonEmitter.on('nonProfitData', function (data) {
-    socket.broadcast.emit('nonProfitData', data)
+    socket.broadcast.emit('non-profit-data', data)
   });
   commonEmitter.on('entryTypeData', function (data) {
-    socket.broadcast.emit('entryTypeData', data)
+    socket.broadcast.emit('entries-data', data)
   });
   console.log('Listener connected');
 })
