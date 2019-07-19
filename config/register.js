@@ -41,7 +41,11 @@ module.exports = function checkLoginDetails(req, res, next) {
   }
 
   if (validator.isEmpty(data.passwordTwo)) {
-    error.passwordTwo = "[Please confirm password";
+    error.passwordTwo = "Please confirm password";
+  }
+
+  if (data.passwordOne != data.passwordTwo) {
+    error.passError = "Passwords do not match"
   }
 
   let isValid = isEmpty(error);
@@ -50,6 +54,9 @@ module.exports = function checkLoginDetails(req, res, next) {
     next();
   } else {
     // next(error);
-    res.status(400).send('Details are missing')
+    res.status(400).json({
+      error: error,
+      message: "There is something wrong"
+    })
   }
 };
