@@ -10,7 +10,7 @@ const { User } = require("./schema");
 
 //User Login
 user.post("/login", checkLoginDetails, (req, res, next) => {
-  const email = req.body.email;
+  const email = req.body.email.toLowerCase()
   const password = req.body.password;
 
   //Find user in database
@@ -56,15 +56,18 @@ user.post("/login", checkLoginDetails, (req, res, next) => {
 
 //Add new User
 user.post("/sign-up", checkRegstrationDetails, (req, res, next) => {
-  User.findOne({ email: req.body.email }).then(user => {
+  const email = req.body.email.toLowerCase()
+  const username = req.body.username.toLowerCase()
+  const date = req.body.date
+  User.findOne({ email: email }).then(user => {
     if (user) {
       res.status(400).json({ email: "Email already Exists" });
     } else {
       const newUser = new User({
-        email: req.body.email,
+        email: email,
         password: req.body.passwordOne,
-        username: req.body.username,
-        date: new Date(),
+        username: username,
+        date: date,
         role: "user"
       });
       bcrypt.genSalt(10, (err, salt) => {
