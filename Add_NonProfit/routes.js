@@ -41,7 +41,7 @@ nonProfit.get("/:id", (req, res) => {
   });
 });
 
-nonProfit.post("/add-non-profit", (req, res) => {
+nonProfit.post("/create-non-profit", (req, res) => {
   const newEntry = new NonProfit(req.body);
   newEntry
     .save()

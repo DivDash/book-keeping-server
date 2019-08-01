@@ -40,7 +40,7 @@ project.get("/:id", (req, res) => {
   });
 });
 
-project.post("/add-project", (req, res) => {
+project.post("/create-project", (req, res) => {
   const newEntry = new Project(req.body);
   newEntry
     .save()

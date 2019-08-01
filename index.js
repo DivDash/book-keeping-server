@@ -8,6 +8,7 @@ const hostname = "localhost";
 const passport = require('passport');
 const { bank } = require("./Bank_Account/routes");
 const { journalEntry } = require("./Journal_Entries/routes");
+const { voucher } = require("./Vouchers/routes");
 const { cash } = require("./Cash_Account/routes");
 const { entryType } = require("./Add_Entry_Type/routes");
 const { project } = require("./Add_Projects/routes");
@@ -62,11 +63,12 @@ app.use(function (req, res, next) {
 });
 
 // ROUTES
-app.use("/bank", bank);
-app.use("/cash", cash);
-app.use("/journal-entries", journalEntry);
+app.use("/bank-account", bank);
+app.use("/cash-account", cash);
+app.use("/journal-entry", journalEntry);
+app.use("/voucher", voucher);
 app.use("/entries", entryType); // Semantic change
-app.use("/projects", project); // Semantic change
+app.use("/project", project); // Semantic change
 app.use("/non-profit", nonProfit); // New added
 app.use("/user-management", user); // User
 
@@ -88,11 +90,14 @@ io.on('connection', (socket)=>{
   commonEmitter.on('journalData', function (data) {
     socket.broadcast.emit('journal-entries-data', data)
   });
+  commonEmitter.on('voucherData', function (data) {
+    socket.broadcast.emit('voucher-data', data)
+  });
   commonEmitter.on('bankData', function (data) {
     socket.broadcast.emit('bank-data', data)
   });
   commonEmitter.on('projectData', function (data) {
-    socket.broadcast.emit('project-data', data)
+    socket.broadcast.emit('projects-data', data)
   });
   commonEmitter.on('nonProfitData', function (data) {
     socket.broadcast.emit('non-profit-data', data)

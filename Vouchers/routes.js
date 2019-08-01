@@ -1,27 +1,27 @@
 const express = require("express");
-const JournalEntry = require("./schema");
+const Voucher = require("./schema");
 const  { commonEmitter } = require('../events')
 
-const changeStream = JournalEntry.watch();
+const changeStream = Voucher.watch();
 
 changeStream.on('change', (data) => {
-  JournalEntry.find((err, doc) => {
+  Voucher.find((err, doc) => {
     if (err) {
-      commonEmitter.emit("journalData", {
+      commonEmitter.emit("voucherData", {
         error: err.message
       })
     } else {
-      commonEmitter.emit("journalData", doc )
+      commonEmitter.emit("voucherData", doc )
     }
   });
 }); 
 
 
-// journalEntry Router
-const journalEntry = express.Router();
+// Voucher Router
+const voucher = express.Router();
 
-journalEntry.get("/", (req, res) => {
-    JournalEntry.find((err, doc) => {
+voucher.get("/", (req, res) => {
+    Voucher.find((err, doc) => {
     if (err) {
       res.status(404).send(err.message);
     } else {
@@ -30,9 +30,9 @@ journalEntry.get("/", (req, res) => {
   });
 });
 
-journalEntry.get("/:id", (req, res) => {
+voucher.get("/:id", (req, res) => {
   const id = req.params.id;
-  JournalEntry.findById(id, (err, doc) => {
+  Voucher.findById(id, (err, doc) => {
     if (err) {
       res.status(404).send(err.message);
     } else {
@@ -41,8 +41,8 @@ journalEntry.get("/:id", (req, res) => {
   });
 });
 
-journalEntry.post("/create-journal-entry", (req, res) => {
-  const newEntry = new JournalEntry(req.body);
+voucher.post("/create-voucher", (req, res) => {
+  const newEntry = new Voucher(req.body);
   newEntry
     .save()
     .then(status => {
@@ -53,9 +53,9 @@ journalEntry.post("/create-journal-entry", (req, res) => {
     });
 });
 
-journalEntry.put("/update-journal-entry/:id", (req, res) => {
+voucher.put("/update-voucher/:id", (req, res) => {
   const id = req.params.id;
-  JournalEntry.findByIdAndUpdate(id, req.body, (err, doc) => {
+  Voucher.findByIdAndUpdate(id, req.body, (err, doc) => {
     if (err) {
       res.status(400).json(err);
     } else {
@@ -64,9 +64,9 @@ journalEntry.put("/update-journal-entry/:id", (req, res) => {
   });
 });
 
-journalEntry.delete("/delete-journal-entry/:id", (req, res) => {
+voucher.delete("/delete-voucher/:id", (req, res) => {
   const id = req.params.id;
-  JournalEntry.findByIdAndRemove(id, (err, status) => {
+  Voucher.findByIdAndRemove(id, (err, status) => {
     if (err) {
       res.status(400).json(err.message);
     } else {
@@ -75,4 +75,4 @@ journalEntry.delete("/delete-journal-entry/:id", (req, res) => {
   });
 });
 
-module.exports.journalEntry = journalEntry;
+module.exports.voucher = voucher;
