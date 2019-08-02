@@ -4,21 +4,14 @@ const isEmpty = require("is-empty");
 //Validator only works with strings
 //isEmpty will check which data is present or unavailable
 
-// email: String,
-// username: String,
-// password: String,
-// date: Date,
-// role: String,
-
 module.exports = function checkLoginDetails(req, res, next) {
   let data = req.body;
 
   let error = {};
 
   data.email = !isEmpty(data.email) ? data.email : "";
-  data.username = !isEmpty(data.username) ? data.username : "";
-  data.passwordOne = !isEmpty(data.passwordOne) ? data.passwordOne : "";
-  data.passwordTwo = !isEmpty(data.passwordTwo) ? data.passwordTwo : "";
+  data.name = !isEmpty(data.name) ? data.name : "";
+  data.password = !isEmpty(data.password) ? data.password : "";
   data.date = !isEmpty(data.date) ? data.date : "";
   data.role = !isEmpty(data.role) ? data.role : "";
 
@@ -28,12 +21,12 @@ module.exports = function checkLoginDetails(req, res, next) {
     error.email = "Email is invalid";
   }
 
-  if (validator.isEmpty(data.username)) {
-    error.username = "Username is required";
+  if (validator.isEmpty(data.name)) {
+    error.name = "Name is required";
   }
 
-  if (validator.isEmpty(data.passwordOne)) {
-    error.passwordOne = "Password is required";
+  if (validator.isEmpty(data.password)) {
+    error.password = "Password is required";
   }
 
   if (validator.isEmpty(data.date)) {
@@ -42,10 +35,6 @@ module.exports = function checkLoginDetails(req, res, next) {
 
   if (validator.isEmpty(data.passwordTwo)) {
     error.passwordTwo = "Please confirm password";
-  }
-
-  if (data.passwordOne != data.passwordTwo) {
-    error.passError = "Passwords do not match"
   }
 
   let isValid = isEmpty(error);

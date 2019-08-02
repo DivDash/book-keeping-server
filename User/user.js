@@ -38,6 +38,9 @@ user.post("/login", checkLoginDetails, (req, res, next) => {
             res.status(200).json({
                 success: true,
                 token: "Bearer " + token,
+                name: user.name,
+                role: user.role,
+                date: user.date
             })
         })
       } else{
@@ -47,28 +50,22 @@ user.post("/login", checkLoginDetails, (req, res, next) => {
           })
       }
     });
-
- 
-  
-
   });
 });
 
 //Add new User
 user.post("/sign-up", checkRegstrationDetails, (req, res, next) => {
-  const email = req.body.email.toLowerCase()
-  const username = req.body.username.toLowerCase()
-  const date = req.body.date
-  User.findOne({ email: email }).then(user => {
+  const email = req.body.email.toLowerCase();
+  const name = req.body.name;
+  const role = req.body.role;
+  User.findOne({ email }).then(user => {
     if (user) {
       res.status(400).json({ email: "Email already Exists" });
     } else {
       const newUser = new User({
-        email: email,
-        password: req.body.passwordOne,
-        username: username,
-        date: date,
-        role: "user"
+        name, email, role,
+        date: new Date(), // Date of user creation
+        password: req.body.password
       });
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -79,7 +76,10 @@ user.post("/sign-up", checkRegstrationDetails, (req, res, next) => {
           newUser
             .save()
             .then(status => {
-              res.status(201).json(status);
+              res.status(201).json({
+                status,
+                token: 'TODO: Usman, this should be generated like when signing in'
+              });
             })
             .catch(rej => {
               res.status(400).json(rej);
